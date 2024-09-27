@@ -1,0 +1,852 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 33267d8023f04bb6be454de97ac79fb1
+      template: 'Template Windows DHCP'
+      name: 'Template Windows DHCP'
+      groups:
+        - name: Templates
+      items:
+        - uuid: fb9ebb58ead646c39a614a85f27b49a1
+          name: 'DHCP Scope Statistics'
+          type: ZABBIX_ACTIVE
+          key: 'DHCPv4ScopeStatistics[]'
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'raw data of DHCPv4ScopeStatistics'
+          tags:
+            - tag: Application
+              value: 'Zabbix raw items'
+        - uuid: c335e18818a7412995b6701020e78580
+          name: 'DHCP Admin Events'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[DhcpAdminEvents,,"Warning|Error",,,,skip]'
+          history: 2w
+          value_type: LOG
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+          triggers:
+            - uuid: 1d452073bede4673bec25267dc08d54d
+              expression: 'logseverity(/Template Windows DHCP/eventlog[DhcpAdminEvents,,"Warning|Error",,,,skip])>1 and nodata(/Template Windows DHCP/eventlog[DhcpAdminEvents,,"Warning|Error",,,,skip],1800s)=0 and logeventid(/Template Windows DHCP/eventlog[DhcpAdminEvents,,"Warning|Error",,,,skip],,"20319")=0'
+              name: 'DHCP Event Log Error'
+              priority: WARNING
+              manual_close: 'YES'
+        - uuid: 240d01febebf464fbb1dff5ed8c8da2c
+          name: 'DHCP Server Acks/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Acks/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 07d90f26288846cf911334a333b75188
+          name: 'DHCP Server Active Queue Length'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Active Queue Length"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 40fc08174911414d95239967955c5597
+          name: 'DHCP Server Conflict Check Queue Length'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Conflict Check Queue Length"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 186c9a6d649e46a5ba3e5b61cf1a4876
+          name: 'DHCP Server Declines/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Declines/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: b8190d54cf1445d18b7a6cf7e807acf1
+          name: 'DHCP Server Denied due to match.'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Denied due to match."]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 617396fa898843acbfad5a966890007f
+          name: 'DHCP Server Denied due to nonmatch.'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Denied due to nonmatch."]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 16e575af9b014457b3008a91c52e2b06
+          name: 'DHCP Server Discovers/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Discovers/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: bed07dfa54d54337ab61650ad9ece75d
+          name: 'DHCP Server Duplicates Dropped/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Duplicates Dropped/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 4c4cd692495f4346823bf4ffca6994fe
+          name: 'DHCP Server Informs/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Informs/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 0f67b74fed64452e90999c004f877308
+          name: 'DHCP Server Milliseconds per packet (Avg).'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Milliseconds per packet (Avg)."]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 52c334f23f7a4a1f9d4dd955b2d9ff3b
+          name: 'DHCP Server Nacks/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Nacks/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 576ccccde9574f7c8230064f4b1147b2
+          name: 'DHCP Server Offer Queue Length'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Offer Queue Length"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: a5eb030db5714b2abda63a1ba7699c2a
+          name: 'DHCP Server Offers/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Offers/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: a6b89c1eeb234f8697f8b673bde5c47f
+          name: 'DHCP Server Packets Expired/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Packets Expired/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: 34468f38a33e49e6bf06b04adfb724b5
+          name: 'DHCP Server Packets Received/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Packets Received/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: b337b2d104eb465a984a20a6bee191a7
+          name: 'DHCP Server Releases/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Releases/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: ad8c8dcc184246e2b08ecb19332ba2b5
+          name: 'DHCP Server Requests/sec'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter_en["\DHCP Server\Requests/sec"]'
+          delay: 5m
+          history: 7d
+          value_type: FLOAT
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+        - uuid: e2a2cf7e76a1470f80bd766243bde5af
+          name: 'State of service DHCP'
+          type: ZABBIX_ACTIVE
+          key: 'service.info[DHCPServer,state]'
+          history: 7d
+          valuemap:
+            name: 'Windows service state'
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 6h
+          tags:
+            - tag: Application
+              value: 'DHCP Server'
+          triggers:
+            - uuid: adfe5bd97f424e89a52abb065a40db6c
+              expression: 'last(/Template Windows DHCP/service.info[DHCPServer,state])<>0'
+              name: 'DHCP-Server - Service is not running'
+              priority: HIGH
+      discovery_rules:
+        - uuid: a74bbf08dc3840c3bac93ea7adb5fa05
+          name: 'DHCP Scope Discovery'
+          type: DEPENDENT
+          key: dhcp.scope.discovery
+          delay: '0'
+          lifetime: 1d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 3f3cdd9440c74e43911131e5f8ff38f0
+              name: 'DHCP Scope [{#SCOPENETWORK}] - All IPs (Free+InUse)'
+              type: CALCULATED
+              key: 'DHCPv4ScopeStatistics.Allip[{#SCOPENETWORK}]'
+              delay: 5m
+              history: 7d
+              params: 'last(//DHCPv4ScopeStatistics.Free[{#SCOPENETWORK}])+last(//DHCPv4ScopeStatistics.InUse[{#SCOPENETWORK}])'
+              preprocessing:
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+            - uuid: b4e79f968b834efcbe71f0e2844df306
+              name: 'DHCP Scope [{#SCOPENETWORK}] - Free'
+              type: DEPENDENT
+              key: 'DHCPv4ScopeStatistics.Free[{#SCOPENETWORK}]'
+              delay: '0'
+              history: 7d
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.ScopeId.IPAddressToString == "{#SCOPENETWORK}")].Free'
+                - type: TRIM
+                  parameters:
+                    - '[]'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              master_item:
+                key: 'DHCPv4ScopeStatistics[]'
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+            - uuid: 585bce52b2874f7ea6eff4dd1066551d
+              name: 'DHCP Scope [{#SCOPENETWORK}] - InUse'
+              type: DEPENDENT
+              key: 'DHCPv4ScopeStatistics.InUse[{#SCOPENETWORK}]'
+              delay: '0'
+              history: 7d
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.ScopeId.IPAddressToString == "{#SCOPENETWORK}")].InUse'
+                - type: TRIM
+                  parameters:
+                    - '[]'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              master_item:
+                key: 'DHCPv4ScopeStatistics[]'
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+            - uuid: 175f74b0a5af4c57bd10284cc5cd6929
+              name: 'DHCP Scope [{#SCOPENETWORK}] - Pending'
+              type: DEPENDENT
+              key: 'DHCPv4ScopeStatistics.Pending[{#SCOPENETWORK}]'
+              delay: '0'
+              history: 7d
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.ScopeId.IPAddressToString == "{#SCOPENETWORK}")].Pending'
+                - type: TRIM
+                  parameters:
+                    - '[]'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              master_item:
+                key: 'DHCPv4ScopeStatistics[]'
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+            - uuid: 8d9795bb93354646b1199bf6fcc5f846
+              name: 'DHCP Scope [{#SCOPENETWORK}] - PercentageInUse'
+              type: DEPENDENT
+              key: 'DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              units: '%'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.ScopeId.IPAddressToString == "{#SCOPENETWORK}")].PercentageInUse'
+                - type: TRIM
+                  parameters:
+                    - '[]'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              master_item:
+                key: 'DHCPv4ScopeStatistics[]'
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+              trigger_prototypes:
+                - uuid: 11113de7a59f4929a53134548e03f763
+                  expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}])>{$DHCP_AVERAGE_STATUS:"{#SCOPENETWORK}"}'
+                  name: 'DHCP Scope [{#SCOPENETWORK}] - is almost full  (>{$DHCP_AVERAGE_STATUS})'
+                  priority: AVERAGE
+                  dependencies:
+                    - name: 'DHCP Scope [{#SCOPENETWORK}] - is full (>{$DHCP_HIGH_STATUS})'
+                      expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}])>{$DHCP_HIGH_STATUS:"{#SCOPENETWORK}"}'
+                - uuid: d6e2f9fe71b5465fb382590b88ea8f7a
+                  expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}])>{$DHCP_WARN_STATUS:"{#SCOPENETWORK}"}'
+                  name: 'DHCP Scope [{#SCOPENETWORK}] - is approaching full (>{$DHCP_WARN_STATUS})'
+                  priority: WARNING
+                  dependencies:
+                    - name: 'DHCP Scope [{#SCOPENETWORK}] - is almost full  (>{$DHCP_AVERAGE_STATUS})'
+                      expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}])>{$DHCP_AVERAGE_STATUS:"{#SCOPENETWORK}"}'
+                - uuid: 982229e90e6a438a8d9fcceb2d4db3c4
+                  expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}])>{$DHCP_HIGH_STATUS:"{#SCOPENETWORK}"}'
+                  name: 'DHCP Scope [{#SCOPENETWORK}] - is full (>{$DHCP_HIGH_STATUS})'
+                  priority: HIGH
+            - uuid: a652230f2000446a81d7eeeeaeb47540
+              name: 'DHCP Scope [{#SCOPENETWORK}] - Reserved'
+              type: DEPENDENT
+              key: 'DHCPv4ScopeStatistics.Reserved[{#SCOPENETWORK}]'
+              delay: '0'
+              history: 7d
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[?(@.ScopeId.IPAddressToString == "{#SCOPENETWORK}")].Reserved'
+                - type: TRIM
+                  parameters:
+                    - '[]'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 6h
+              master_item:
+                key: 'DHCPv4ScopeStatistics[]'
+              tags:
+                - tag: Application
+                  value: 'DHCP Server'
+          trigger_prototypes:
+            - uuid: 7c81f59d6c3c4646a1ceddf1b565e85f
+              expression: 'last(/Template Windows DHCP/DHCPv4ScopeStatistics.Free[{#SCOPENETWORK}])=0 and last(/Template Windows DHCP/DHCPv4ScopeStatistics.InUse[{#SCOPENETWORK}])=0 and last(/Template Windows DHCP/DHCPv4ScopeStatistics.Pending[{#SCOPENETWORK}])=0 and last(/Template Windows DHCP/DHCPv4ScopeStatistics.Reserved[{#SCOPENETWORK}])=0'
+              name: 'DHCP Scope [{#SCOPENETWORK}] - Inactive'
+              priority: INFO
+          graph_prototypes:
+            - uuid: ca0f623d654b432882f83945a4e9fdc8
+              name: 'DHCP Scope [{#SCOPENETWORK}]'
+              width: '700'
+              ymin_type_1: FIXED
+              graph_items:
+                - sortorder: '1'
+                  drawtype: GRADIENT_LINE
+                  color: '000000'
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template Windows DHCP'
+                    key: 'DHCPv4ScopeStatistics.Allip[{#SCOPENETWORK}]'
+                - sortorder: '2'
+                  drawtype: GRADIENT_LINE
+                  color: '787878'
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template Windows DHCP'
+                    key: 'DHCPv4ScopeStatistics.Reserved[{#SCOPENETWORK}]'
+                - sortorder: '3'
+                  drawtype: BOLD_LINE
+                  color: 00FF00
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template Windows DHCP'
+                    key: 'DHCPv4ScopeStatistics.InUse[{#SCOPENETWORK}]'
+                - sortorder: '4'
+                  drawtype: FILLED_REGION
+                  color: FFBF00
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Template Windows DHCP'
+                    key: 'DHCPv4ScopeStatistics.Pending[{#SCOPENETWORK}]'
+                - sortorder: '5'
+                  color: FF0000
+                  item:
+                    host: 'Template Windows DHCP'
+                    key: 'DHCPv4ScopeStatistics.PercentageInUse[{#SCOPENETWORK}]'
+          master_item:
+            key: 'DHCPv4ScopeStatistics[]'
+          lld_macro_paths:
+            - lld_macro: '{#SCOPENETWORK}'
+              path: $.ScopeId.IPAddressToString
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+      tags:
+        - tag: Service
+          value: DHCP
+      macros:
+        - macro: '{$DHCP_AVERAGE_STATUS}'
+          value: '90'
+        - macro: '{$DHCP_HIGH_STATUS}'
+          value: '97'
+        - macro: '{$DHCP_WARN_STATUS}'
+          value: '80'
+      dashboards:
+        - uuid: 63ce2e7f690b4031bb5527b15cb9c5ac
+          name: 'DHCP-Server Status'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Acks/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAOW
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  'y': '5'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Declines/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAOZ
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  'y': '10'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Discovers/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPC
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  'y': '15'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Milliseconds per packet (Avg)."]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPF
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  'y': '20'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Offers/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPI
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  'y': '25'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Releases/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPL
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Active Queue Length"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAOX
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  'y': '5'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Denied due to match."]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPA
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  'y': '10'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Duplicates Dropped/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPD
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  'y': '15'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Nacks/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPG
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  'y': '20'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Packets Expired/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPJ
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '24'
+                  'y': '25'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Requests/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPM
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Conflict Check Queue Length"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAOY
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  'y': '5'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Denied due to nonmatch."]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPB
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  'y': '10'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Informs/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPE
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  'y': '15'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Offer Queue Length"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPH
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  'y': '20'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'perf_counter_en["\DHCP Server\Packets Received/sec"]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPK
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+                - type: graph
+                  x: '48'
+                  'y': '25'
+                  width: '24'
+                  height: '5'
+                  fields:
+                    - type: ITEM
+                      name: itemid
+                      value:
+                        host: 'Template Windows DHCP'
+                        key: 'service.info[DHCPServer,state]'
+                    - type: STRING
+                      name: reference
+                      value: AAAPN
+                    - type: INTEGER
+                      name: source_type
+                      value: '1'
+        - uuid: d3f62cafbac84c8f846c9d514351d0cb
+          name: 'DHCP Scopes'
+          pages:
+            - widgets:
+                - type: graphprototype
+                  width: '72'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: columns
+                      value: '1'
+                    - type: GRAPH_PROTOTYPE
+                      name: graphid
+                      value:
+                        host: 'Template Windows DHCP'
+                        name: 'DHCP Scope [{#SCOPENETWORK}]'
+                    - type: STRING
+                      name: reference
+                      value: AAAKQ
+      valuemaps:
+        - uuid: d7ceb52cc2fd463fad94ad9a6bebab7d
+          name: 'Windows service state'
+          mappings:
+            - value: '0'
+              newvalue: Running
+            - value: '1'
+              newvalue: Paused
+            - value: '3'
+              newvalue: 'Pause pending'
+            - value: '4'
+              newvalue: 'Continue pending'
+            - value: '5'
+              newvalue: 'Stop pending'
+            - value: '6'
+              newvalue: Stopped
+            - value: '7'
+              newvalue: Unknown
+            - value: '255'
+              newvalue: 'No such service'
+            - value: '2'
+              newvalue: 'Start pending'
